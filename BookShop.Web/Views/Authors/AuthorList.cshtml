@@ -1,0 +1,44 @@
+﻿@model BookShop.Models.Abstractions.IPagedResult<BookShop.Models.AuthorModel>
+
+@{
+    ViewData["Title"] = "AuthorList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Authors</h1>
+
+<p>
+    <a asp-action="CreateAuthor">Create New</a>
+</p>
+@if(Model.Items.Any()){
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Id")
+            </th>
+            <th>
+                @Html.DisplayName("Full Name")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameAndSurname)
+            </td>
+            <td>
+                @Html.ActionLink("Add Book", "AddBook", "Books", new { /* id=item.PrimaryKey */ }) |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+} else {
+    <p>Empty</p>
+}
