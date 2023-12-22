@@ -1,7 +1,11 @@
+using BookShop.Domain;
 using BookShop.Infrastructure.Context;
 using BookShop.Infrastructure.Handlers.Commands;
 using BookShop.Infrastructure.Handlers.Queries;
 using BookShop.Infrastructure.Repositories;
+using BookShop.Infrastructure.Validations;
+using BookShop.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +37,12 @@ namespace BookShop.Web
             services.AddTransient<AuthorRepository>();
             services.AddTransient<CreateAuthorCommandHandler>();
             services.AddTransient<GetAuthorListQueryHandler>();
+            services.AddTransient<BookRepository>();
+            services.AddTransient<CreateBookCommandHandler>();
+            services.AddTransient<UpdateAuthorBookCountCommandHandler>();
+            services.AddScoped<IValidator<AuthorModel>, AuthorValidator>();
+            services.AddScoped<IValidator<BookModel>, BookValidator>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
