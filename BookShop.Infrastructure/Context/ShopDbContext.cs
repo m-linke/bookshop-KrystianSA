@@ -13,6 +13,7 @@ namespace BookShop.Infrastructure.Context
         }
 
         public DbSet<AuthorEntity> Authors { get; set; }
+        public DbSet<BookEntity> BookEntity { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
