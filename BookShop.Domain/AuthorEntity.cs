@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace BookShop.Domain
 {
@@ -8,7 +10,7 @@ namespace BookShop.Domain
         public int Id { get; private set; }
         public string Name { get; private set; }
         public string Surname { get; private set; }
-        public int BookCount { get; private set; }
+        public int BookCount { get; set; }
 
         public IReadOnlyCollection<BookEntity> Books => books;
         private List<BookEntity> books;
@@ -27,11 +29,6 @@ namespace BookShop.Domain
                 BookCount = 0
             };
             return result;
-        }
-
-        public void AddBook(string title, string description, string releaseDate)
-        {
-            throw new NotImplementedException();
         }
     }
 }
