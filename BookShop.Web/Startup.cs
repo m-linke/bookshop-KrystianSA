@@ -40,6 +40,7 @@ namespace BookShop.Web
             services.AddTransient<BookRepository>();
             services.AddTransient<CreateBookCommandHandler>();
             services.AddTransient<UpdateAuthorBookCountCommandHandler>();
+            services.AddTransient<GetBookListQueryHandler>();
             services.AddScoped<IValidator<AuthorModel>, AuthorValidator>();
             services.AddScoped<IValidator<BookModel>, BookValidator>();
 

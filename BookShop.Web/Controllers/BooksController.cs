@@ -1,6 +1,8 @@
 ﻿using BookShop.Infrastructure.Handlers.Commands;
+using BookShop.Infrastructure.Handlers.Queries;
 using BookShop.Models;
 using BookShop.Models.Commands;
+using BookShop.Models.Queries;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +15,17 @@ namespace BookShop.Web.Controllers
         private readonly IValidator<BookModel> bookValidator;
         private readonly CreateBookCommandHandler createBookCommandHandler;
         private readonly UpdateAuthorBookCountCommandHandler updateAuthorBookCountCommandHandler;
+        private readonly GetBookListQueryHandler getBookListQueryHandler;
 
         public BooksController(IValidator<BookModel> bookValidator,
             CreateBookCommandHandler createBookCommandHandler,
-            UpdateAuthorBookCountCommandHandler updateAuthorBookCountCommandHandler)
+            UpdateAuthorBookCountCommandHandler updateAuthorBookCountCommandHandler,
+            GetBookListQueryHandler getBookListQueryHandler)
         {
             this.bookValidator = bookValidator;
             this.createBookCommandHandler = createBookCommandHandler;
             this.updateAuthorBookCountCommandHandler = updateAuthorBookCountCommandHandler;
+            this.getBookListQueryHandler = getBookListQueryHandler;
         }
 
         [HttpGet]
@@ -40,6 +45,12 @@ namespace BookShop.Web.Controllers
                 return RedirectToAction("AuthorList", "Authors");
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListBooks(int id)
+        {
+            return View(await getBookListQueryHandler.Handler(new GetBookListQuery(id)));
         }
     }
 }
