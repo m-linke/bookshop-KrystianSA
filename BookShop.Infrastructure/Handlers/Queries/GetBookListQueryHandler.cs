@@ -29,7 +29,6 @@ namespace BookShop.Infrastructure.Handlers.Queries
                 .OrderBy(id => id.Id);
             var pagedResult = await dbQuery.ToPagedResult(query, x => new BookModel
             {
-                Id = x.Id,
                 Title = x.Title,
                 Description = x.Description,
                 ReleaseDate = x.ReleaseDate
