@@ -1,10 +1,10 @@
-﻿@model IEnumerable<BookShop.Domain.BookEntity>;
+﻿@model BookShop.Models.Abstractions.IPagedResult<BookShop.Models.BookModel>
 @{
     ViewData["Title"] = "ListBooks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model.Any())
+@if (Model.Items.Any())
 {
     <h1>Books</h1>
     <table class="table">
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 <tr>
                     <td>

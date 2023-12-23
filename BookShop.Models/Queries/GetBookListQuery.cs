@@ -2,12 +2,16 @@
 
 namespace BookShop.Models.Queries
 {
-    public class GetBookListQuery : IQuery<BookModel>
+    public class GetBookListQuery : IPagedQuery<BookModel>
     {
-        public GetBookListQuery(int authorId)
+        public GetBookListQuery(int authorId, int currentPage, int rowCount)
         {
             AuthorId = authorId;
+            CurrentPage = currentPage;
+            RowCount = rowCount;
         }
-        public int AuthorId;
+        public int AuthorId { get; private set; }
+        public int CurrentPage { get; private set; }
+        public int RowCount { get; private set; }
     }
 }

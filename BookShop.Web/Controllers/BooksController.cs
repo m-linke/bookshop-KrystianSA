@@ -48,9 +48,9 @@ namespace BookShop.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListBooks(int id)
+        public async Task<IActionResult> ListBooks([FromQuery] PagedQueryModel model,int id)
         {
-            return View(await getBookListQueryHandler.Handler(new GetBookListQuery(id)));
+            return View(await getBookListQueryHandler.Handler(new GetBookListQuery(id,model.CurrentPage,model.CurrentPage)));
         }
     }
 }

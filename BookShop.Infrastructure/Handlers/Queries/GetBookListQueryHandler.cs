@@ -1,6 +1,8 @@
 ﻿using BookShop.Domain;
 using BookShop.Infrastructure.Context;
+using BookShop.Infrastructure.Pagination;
 using BookShop.Models;
+using BookShop.Models.Abstractions;
 using BookShop.Models.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,13 +21,20 @@ namespace BookShop.Infrastructure.Handlers.Queries
         {
             this.shopDbContext = shopDbContext;
         }
-        public async Task<IEnumerable<BookEntity>> Handler(GetBookListQuery query)
+        public async Task<IPagedResult<BookModel>> Handler(GetBookListQuery query)
         {
             var dbQuery = shopDbContext.BookEntity
-                .AsEnumerable().
-                Where(authorId=>authorId.AuthorId==query.AuthorId)
-                .OrderBy(id=>id.Id);
-            return dbQuery;
+                .AsQueryable().
+                Where(authorId => authorId.AuthorId == query.AuthorId)
+                .OrderBy(id => id.Id);
+            var pagedResult = await dbQuery.ToPagedResult(query, x => new BookModel
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                ReleaseDate = x.ReleaseDate
+            });
+            return pagedResult;
         }
     }
 }
